@@ -1,0 +1,20 @@
+version: 0.2
+
+env:
+  variables:
+    key: "value"
+        
+phases:
+  install:
+    runtime-versions:
+      java: corretto21
+    
+  build:
+    commands:
+      - chmod +x ./gradlew build
+      - ./gradlew build
+
+artifacts:
+  files:
+    - '**/*.jar'
+  base-directory: build/libs

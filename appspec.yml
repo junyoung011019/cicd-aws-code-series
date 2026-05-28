@@ -1,0 +1,9 @@
+version: 0.0
+os: linux
+files:
+  - source: /
+    destination: /home/ec2-user/spring
+hooks:
+  ApplicationStart:
+    - location: scripts/deploy.sh
+      timeout: 60

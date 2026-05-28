@@ -1,36 +1,38 @@
-# AWS Code 시리즈 정복기
+# 🚀 AWS Code 시리즈 정복기
 
-### CodeCommit (Github)
+AWS Code 시리즈(CodeBuild, CodeDeploy, CodePipeline)와 Jenkins를 활용한 CI/CD 파이프라인을 단계별로 구축하며 인프라 구조를 학습하는 프로젝트입니다.
 
-### CodeBuild (코드 ➔ Jar로 Build - Jenkins)
+### 1. CodeCommit (Github)
 
-### CodeDeploy (EC2에 배포)
+### 2. CodeBuild (코드 ➔ Jar로 Build - Jenkins)
 
-> ### Step1. Github + AWS Code 시리즈로 CI/CD 구성
->
-> [CodePipeline]
->
-> `GitHub` ➔ `AWS CodeBuild` ➔ `AWS CodeDeploy` ➔ `AWS EC2`
+### 3. CodeDeploy (EC2에 배포)
 
-## 1. 역할 생성
+---
 
-#### Code Build (CodeBuild-Role)
+## 🗺️ 로드맵
 
-AmazonS3FullAccess (S3에 빌드 저장물(JAR)를 저장해야해서), AWSCodeBuildAdminAccess, CloudWatchLogsFullAccess (빌드간 로그 남기기 위해)
+| 단계                   | 흐름                                            |
+| -------------------- | --------------------------------------------- |
+| [Step 1. GitHub + AWS](docs/step1.md) | `GitHub` → `CodeBuild` → `CodeDeploy` → `EC2` |
+| [Step 2. Jenkins](docs/step2.md)      | `GitHub` → `Jenkins` → `CodeDeploy` → `EC2`   |
 
-#### Code Deploy (CodeDeploy-Role)
+---
 
-AWSCodeDeployRole
+## 📂 핵심 파일
 
-#### EC2 (EC2-CodeDeploy-Role)
+| 파일                             | 역할                |
+| ------------------------------ | ----------------- |
+| `buildspec.yml`                | CodeBuild 빌드 명세서  |
+| `appspec.yml`                  | CodeDeploy 배포 명세서 |
+| `scripts/deploy.sh`            | EC2 배포 스크립트       |
 
-AmazonEC2RoleforAWSCodeDeploy, AmazonS3ReadOnlyAccess (S3에서 빌드 저장물(JAR) 불러오려고)
 
-## 2. 대상 EC2 생성
+---
 
-AmazonSSMManagedInstanceCore - SSM 연결시 EC2 Role에 추가해주고 재부팅\
-https://docs.aws.amazon.com/ko_kr/codedeploy/latest/userguide/codedeploy-agent-operations-install-linux.html
+## ⚙️ 기술 스택
 
-CodeDeploy Agent EC2 내에 설치
-
-wget https://aws-codedeploy-ap-northeast-2.s3.ap-northeast-2.amazonaws.com/latest/install
+- AWS CodeBuild, CodeDeploy, CodePipeline
+- Jenkins
+- GitHub
+- Java 21 / Spring Boot / Gradle (배포 대상 앱)
