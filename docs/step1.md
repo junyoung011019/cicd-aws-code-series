@@ -90,7 +90,8 @@ artifacts:
     - build/libs/*.jar
     - appspec.yml
     - scripts/**
-  discard-paths: no
+  discard-paths: yes
+  packaging: ZIP
 ```
 
 ### [appspec.yml (배포 명세서)](https://docs.aws.amazon.com/ko_kr/codedeploy/latest/userguide/reference-appspec-file.html)

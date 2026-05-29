@@ -19,4 +19,5 @@ artifacts:
     - build/libs/*.jar
     - appspec.yml
     - scripts/**
-  discard-paths: no
+  discard-paths: yes
+  packaging: ZIP
