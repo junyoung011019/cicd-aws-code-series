@@ -1,8 +1,8 @@
-# Step1. Github + AWS Code 시리즈로 CI/CD 구성
+# Step1. AWS Native CI/CD 구성 (CodeCommit)
 
 > [CodePipeline]
 >
-> `GitHub` ➔ `AWS CodeBuild` ➔ `AWS CodeDeploy` ➔ `AWS EC2`
+> `CodeCommit` ➔ `AWS CodeBuild` ➔ `AWS CodeDeploy` ➔ `AWS EC2`
 
 ---
 
@@ -55,11 +55,11 @@ sudo systemctl enable --now codedeploy-agent
 
 ---
 
-## 3. Github Repo 생성 및 연동
+## 3. CodeCommit 레포 생성 및 연동
 
 ```bash
 git init
-git remote add origin https://github.com/<username>/cicd-aws-code-series.git
+git remote add origin https://git-codecommit.ap-northeast-2.amazonaws.com/v1/repos/cicd-aws-code-series
 git push -u origin main
 ```
 
@@ -87,8 +87,10 @@ phases:
 
 artifacts:
   files:
-    - '**/*.jar'
-  base-directory: build/libs
+    - build/libs/*.jar
+    - appspec.yml
+    - scripts/**
+  discard-paths: no
 ```
 
 ### [appspec.yml (배포 명세서)](https://docs.aws.amazon.com/ko_kr/codedeploy/latest/userguide/reference-appspec-file.html)
