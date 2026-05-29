@@ -90,7 +90,7 @@ artifacts:
     - build/libs/*.jar
     - appspec.yml
     - scripts/**
-  discard-paths: yes
+  discard-paths: no
   packaging: ZIP
 ```
 

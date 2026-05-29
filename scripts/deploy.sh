@@ -15,4 +15,4 @@ if pgrep -f '*.jar' > /dev/null; then
 fi
 
 # 5. Spring 프로세스 기동
-nohup java -jar /home/ec2-user/spring/*.jar >> $LOG_FILE 2>&1 &
+nohup java -jar /home/ec2-user/spring/build/libs/*.jar >> $LOG_FILE 2>&1 &
