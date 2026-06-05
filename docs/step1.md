@@ -185,7 +185,7 @@ nohup java -jar /home/ec2-user/spring/build/libs/*[^plain].jar >> $LOG_FILE 2>&1
 
 ## 7. CodePipeline 생성
 
-![CodePipeline](step1_code%20pipeline.png)
+![CodePipeline](step1_pipeline.png)
 
 - 리전: us-east-1
 - 파이프라인 이름: `cicd-pipeline`
@@ -204,3 +204,13 @@ nohup java -jar /home/ec2-user/spring/build/libs/*[^plain].jar >> $LOG_FILE 2>&1
 - 공급자: AWS CodeDeploy
 - 애플리케이션: `cicd-app`
 - 배포 그룹: `cicd-deploy-group`
+
+---
+
+## 8. 배포 결과
+
+### Before
+![Before](step1_before.png)
+
+### After
+![After](step1_after.png)

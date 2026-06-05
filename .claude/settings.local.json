@@ -6,7 +6,8 @@
       "Bash(New-Item -Path \"C:\\\\Users\\\\MZC02-JUNGJUNYOUNG\\\\OneDrive\\\\cicd-aws-code-series\\\\src\\\\main\\\\java\\\\com\\\\example\\\\cicd_aws_code_series\\\\controller\\\\MainController.java\" -ItemType File -Force)",
       "Bash(Out-Null)",
       "PowerShell(New-Item *)",
-      "PowerShell(git *)"
+      "PowerShell(git *)",
+      "PowerShell(Rename-Item *)"
     ]
   }
 }
