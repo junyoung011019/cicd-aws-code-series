@@ -15,8 +15,8 @@ if ! command -v java &> /dev/null; then
 fi
 
 # 5. 기존 프로세스 있다면 종료
-if pgrep -f '*.jar' > /dev/null; then
-    kill -9 $(pgrep -f '*.jar')
+if pgrep -f 'java' > /dev/null; then
+    kill -9 $(pgrep -f 'java')
 fi
 
 # 6. Spring 프로세스 기동
