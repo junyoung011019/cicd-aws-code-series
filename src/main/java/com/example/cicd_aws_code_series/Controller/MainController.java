@@ -35,7 +35,7 @@ public class MainController {
                 </head>
                 <body>
                   <div class="card">
-                    <div class="badge">⏳ 배포 중</div>
+                    <div class="badge">✓ 배포 완료</div>
                     <h1>Step 2. GitHub 연동</h1>
                     <p class="time">%s</p>
                     <div class="pipeline">
