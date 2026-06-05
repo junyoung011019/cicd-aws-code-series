@@ -59,6 +59,8 @@ sudo systemctl enable --now codedeploy-agent
 
 ## 3. CodeCommit 레포 생성 및 SSH 연동
 
+![CodeCommit](codecommit.png)
+
 ### SSH 키 생성 및 등록
 
 ```bash
@@ -161,6 +163,8 @@ nohup java -jar /home/ec2-user/spring/build/libs/*[^plain].jar >> $LOG_FILE 2>&1
 ---
 
 ## 5. CodeBuild 프로젝트 생성
+
+![CodeBuild](codebuild.png)
 
 - 리전: us-east-1
 - 소스: AWS CodeCommit - `cicd-aws-code-series` (main 브랜치)
