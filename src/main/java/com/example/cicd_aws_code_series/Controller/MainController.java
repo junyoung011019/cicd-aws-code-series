@@ -25,23 +25,23 @@ public class MainController {
                     body { margin: 0; display: flex; justify-content: center; align-items: center; height: 100vh; background: #f0f4f8; font-family: sans-serif; }
                     .card { background: white; border-radius: 12px; padding: 40px 60px; box-shadow: 0 4px 16px rgba(0,0,0,0.1); text-align: center; }
                     h1 { font-size: 2rem; color: #2d3748; margin-bottom: 8px; }
-                    .badge { display: inline-block; background: #48bb78; color: white; border-radius: 20px; padding: 4px 16px; font-size: 0.9rem; margin-bottom: 20px; }
+                    .badge { display: inline-block; background: #3182ce; color: white; border-radius: 20px; padding: 4px 16px; font-size: 0.9rem; margin-bottom: 20px; }
                     .time { color: #718096; font-size: 0.95rem; margin-bottom: 24px; }
                     .pipeline { display: flex; align-items: center; justify-content: center; gap: 8px; flex-wrap: wrap; margin-top: 16px; }
                     .step { background: #ebf4ff; color: #3182ce; border-radius: 8px; padding: 6px 14px; font-size: 0.85rem; font-weight: 600; }
-                    .step.active { background: #48bb78; color: white; }
+                    .step.active { background: #3182ce; color: white; }
                     .arrow { color: #a0aec0; font-size: 1rem; }
                   </style>
                 </head>
                 <body>
                   <div class="card">
-                    <div class="badge">✓ 배포 성공</div>
-                    <h1>Step 1. AWS Native CI/CD</h1>
+                    <div class="badge">⏳ 배포 중</div>
+                    <h1>Step 2. GitHub 연동</h1>
                     <p class="time">%s</p>
                     <div class="pipeline">
                       <span class="step">Local Git</span>
                       <span class="arrow">→</span>
-                      <span class="step">CodeCommit</span>
+                      <span class="step">GitHub</span>
                       <span class="arrow">→</span>
                       <span class="step">CodeBuild</span>
                       <span class="arrow">→</span>
