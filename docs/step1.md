@@ -10,26 +10,26 @@
 
 #### Code Build (CodeBuild-Role)
 
-| 정책 | 이유 |
-|------|------|
-| `AmazonS3FullAccess` | S3에 빌드 저장물(JAR)를 저장해야해서 |
-| `AWSCodeBuildAdminAccess` | CodeBuild 권한 |
-| `CloudWatchLogsFullAccess` | 빌드간 로그 남기기 위해 |
+| 정책                         | 이유                      |
+| -------------------------- | ----------------------- |
+| `AmazonS3FullAccess`       | S3에 빌드 저장물(JAR)를 저장해야해서 |
+| `AWSCodeBuildAdminAccess`  | CodeBuild 권한            |
+| `CloudWatchLogsFullAccess` | 빌드간 로그 남기기 위해           |
 
 #### Code Deploy (CodeDeploy-Role)
 
-| 정책 | 이유 |
-|------|------|
+| 정책                  | 이유        |
+| ------------------- | --------- |
 | `AWSCodeDeployRole` | EC2 배포 명령 |
 
 #### EC2 (EC2-CodeDeploy-Role)
 
-| 정책 | 이유 |
-|------|------|
-| `AmazonEC2RoleforAWSCodeDeploy` | CodeDeploy 연동 |
-| `AmazonS3ReadOnlyAccess` | S3에서 빌드 저장물(JAR) 불러오려고 |
-| `AmazonSSMManagedInstanceCore` | SSM 연결시 EC2 Role에 추가해주고 재부팅 |
-| `CloudWatchAgentServerPolicy` | CloudWatch 로그 |
+| 정책                              | 이유                          |
+| ------------------------------- | --------------------------- |
+| `AmazonEC2RoleforAWSCodeDeploy` | CodeDeploy 연동               |
+| `AmazonS3ReadOnlyAccess`        | S3에서 빌드 저장물(JAR) 불러오려고      |
+| `AmazonSSMManagedInstanceCore`  | SSM 연결시 EC2 Role에 추가해주고 재부팅 |
+| `CloudWatchAgentServerPolicy`   | CloudWatch 로그               |
 
 ---
 
