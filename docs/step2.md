@@ -57,6 +57,8 @@ sudo systemctl enable --now codedeploy-agent
 
 ## 3. Github Repo 생성 및 연동
 
+![GitHub](step2/github.png)
+
 ```bash
 git init
 git remote add origin https://github.com/<username>/cicd-aws-code-series.git
@@ -132,7 +134,7 @@ nohup java -jar /home/ec2-user/spring/*.jar >> $LOG_FILE 2>&1 &
 
 ## 5. CodeBuild 프로젝트 생성
 
-> 작성 예정
+![CodeBuild](step2/step2_codebuild.png)
 
 ## 6. CodeDeploy 애플리케이션 + 배포 그룹 생성
 
@@ -140,4 +142,31 @@ nohup java -jar /home/ec2-user/spring/*.jar >> $LOG_FILE 2>&1 &
 
 ## 7. CodePipeline 생성
 
-> 작성 예정
+![CodePipeline](step2/step2_pipeline.png)
+
+---
+
+## 8. 배포 결과
+
+![After](step2/step2_after.png)
+
+---
+
+## 트러블슈팅
+
+### CodePipeline GitHub 연결 권한 오류
+
+`Unable to use Connection` 오류 발생 시 CodePipeline 서비스 역할에 아래 인라인 정책 추가.
+
+```json
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": "codeconnections:UseConnection",
+      "Resource": "<연결 ARN>"
+    }
+  ]
+}
+```

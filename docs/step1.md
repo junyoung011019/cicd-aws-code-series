@@ -59,7 +59,7 @@ sudo systemctl enable --now codedeploy-agent
 
 ## 3. CodeCommit 레포 생성 및 SSH 연동
 
-![CodeCommit](codecommit.png)
+![CodeCommit](step1/codecommit.png)
 
 ### SSH 키 생성 및 등록
 
@@ -164,7 +164,7 @@ nohup java -jar /home/ec2-user/spring/build/libs/*[^plain].jar >> $LOG_FILE 2>&1
 
 ## 5. CodeBuild 프로젝트 생성
 
-![CodeBuild](codebuild.png)
+![CodeBuild](step1/codebuild.png)
 
 - 리전: us-east-1
 - 소스: AWS CodeCommit - `cicd-aws-code-series` (main 브랜치)
@@ -189,7 +189,7 @@ nohup java -jar /home/ec2-user/spring/build/libs/*[^plain].jar >> $LOG_FILE 2>&1
 
 ## 7. CodePipeline 생성
 
-![CodePipeline](step1_pipeline.png)
+![CodePipeline](step1/step1_pipeline.png)
 
 - 리전: us-east-1
 - 파이프라인 이름: `cicd-pipeline`
@@ -214,7 +214,7 @@ nohup java -jar /home/ec2-user/spring/build/libs/*[^plain].jar >> $LOG_FILE 2>&1
 ## 8. 배포 결과
 
 ### Before
-![Before](step1_before.png)
+![Before](step1/step1_before.png)
 
 ### After
-![After](step1_after.png)
+![After](step1/step1_after.png)

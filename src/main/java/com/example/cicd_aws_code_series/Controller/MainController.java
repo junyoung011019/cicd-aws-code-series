@@ -31,21 +31,26 @@ public class MainController {
                     .step { background: #ebf4ff; color: #3182ce; border-radius: 8px; padding: 6px 14px; font-size: 0.85rem; font-weight: 600; }
                     .step.active { background: #3182ce; color: white; }
                     .arrow { color: #a0aec0; font-size: 1rem; }
+                    .pipeline-group { display: flex; align-items: center; gap: 8px; border: 2px dashed #3182ce; border-radius: 10px; padding: 8px 12px; position: relative; }
+                    .pipeline-label { position: absolute; top: -10px; left: 12px; background: white; padding: 0 6px; font-size: 0.75rem; color: #3182ce; font-weight: 600; }
                   </style>
                 </head>
                 <body>
                   <div class="card">
                     <div class="badge">✓ 배포 완료</div>
-                    <h1>Step 2. GitHub 연동</h1>
+                    <h1>Step 2. GitHub 연동</h1> 
                     <p class="time">%s</p>
                     <div class="pipeline">
                       <span class="step">Local Git</span>
                       <span class="arrow">→</span>
                       <span class="step">GitHub</span>
                       <span class="arrow">→</span>
-                      <span class="step">CodeBuild</span>
-                      <span class="arrow">→</span>
-                      <span class="step">CodeDeploy</span>
+                      <div class="pipeline-group">
+                        <span class="pipeline-label">CodePipeline</span>
+                        <span class="step">CodeBuild</span>
+                        <span class="arrow">→</span>
+                        <span class="step">CodeDeploy</span>
+                      </div>
                       <span class="arrow">→</span>
                       <span class="step active">EC2</span>
                     </div>
