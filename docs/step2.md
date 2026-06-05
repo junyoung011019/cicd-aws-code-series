@@ -8,50 +8,13 @@
 
 ## 1. 역할 생성
 
-#### Code Build (CodeBuild-Role)
-
-| 정책 | 이유 |
-|------|------|
-| `AmazonS3FullAccess` | S3에 빌드 저장물(JAR)를 저장해야해서 |
-| `AWSCodeBuildAdminAccess` | CodeBuild 권한 |
-| `CloudWatchLogsFullAccess` | 빌드간 로그 남기기 위해 |
-
-#### Code Deploy (CodeDeploy-Role)
-
-| 정책 | 이유 |
-|------|------|
-| `AWSCodeDeployRole` | EC2 배포 명령 |
-
-#### EC2 (EC2-CodeDeploy-Role)
-
-| 정책 | 이유 |
-|------|------|
-| `AmazonEC2RoleforAWSCodeDeploy` | CodeDeploy 연동 |
-| `AmazonS3ReadOnlyAccess` | S3에서 빌드 저장물(JAR) 불러오려고 |
-| `AmazonSSMManagedInstanceCore` | SSM 연결시 EC2 Role에 추가해주고 재부팅 |
-| `CloudWatchAgentServerPolicy` | CloudWatch 로그 |
+> Step 재사용. 별도 생성 불필요.
 
 ---
 
 ## 2. 대상 EC2 생성
 
-- AMI: Amazon Linux 2023
-- 인스턴스 타입: t3.micro
-- IAM Role: `EC2-CodeDeploy-Role`
-- 보안 그룹: SSH(22), HTTP(80), 8080 인바운드 오픈
-- 태그: `Name = cicd-server`
-
-#### CodeDeploy Agent 설치
-
-> 참고: [CodeDeploy Agent 설치 가이드](https://docs.aws.amazon.com/ko_kr/codedeploy/latest/userguide/codedeploy-agent-operations-install-linux.html)
-
-```bash
-sudo yum install -y ruby wget
-wget https://aws-codedeploy-ap-northeast-2.s3.ap-northeast-2.amazonaws.com/latest/install
-chmod +x ./install
-sudo ./install auto
-sudo systemctl enable --now codedeploy-agent
-```
+> Step 1과 동일하게 재사용. 별도 생성 불필요.
 
 ---
 
@@ -59,100 +22,41 @@ sudo systemctl enable --now codedeploy-agent
 
 ![GitHub](step2/github.png)
 
-```bash
-git init
-git remote add origin https://github.com/<username>/cicd-aws-code-series.git
-git push -u origin main
-```
+---
+
+## 4. 설정 파일 구성
+
+> Step 1과 동일하게 재사용. 별도 생성 불필요.
 
 ---
 
-## 4. 설정 파일 구성 (buildspec.yml / appspec.yml / scripts/deploy.sh)
-
-### [buildspec.yml (빌드 명세서)](https://docs.aws.amazon.com/ko_kr/codebuild/latest/userguide/build-spec-ref.html#build-spec-ref-syntax)
-
-```yaml
-version: 0.2
-
-env:
-  variables:
-    APP_VERSION: "1.0.0"
-
-phases:
-  install:
-    runtime-versions:
-      java: corretto21 # https://docs.aws.amazon.com/ko_kr/codebuild/latest/userguide/available-runtimes.html
-  build:
-    commands:
-      - chmod +x ./gradlew
-      - ./gradlew build
-
-artifacts:
-  files:
-    - '**/*.jar'
-  base-directory: build/libs
-```
-
-### [appspec.yml (배포 명세서)](https://docs.aws.amazon.com/ko_kr/codedeploy/latest/userguide/reference-appspec-file.html)
-
-```yaml
-version: 0.0
-os: linux
-files:
-  - source: /          # 어떤 파일을 들고올껀지
-    destination: /home/ec2-user/spring  # 어디 위치에 풀껀지
-hooks:
-  ApplicationStart:
-    - location: scripts/deploy.sh
-      timeout: 60
-```
-
-### deploy.sh (Spring 재실행 배포 스크립트)
-
-```bash
-#!/bin/bash
-
-# 1. 로그 파일 경로 변수로 잡기
-LOG_FILE=/home/ec2-user/spring/logs/app-$(TZ=Asia/Seoul date +%Y%m%d).log
-
-# 2. logs 폴더 생성
-mkdir -p /home/ec2-user/spring/logs
-
-# 3. 배포 시작 시간 기록
-echo "===== 배포 시작: $(TZ=Asia/Seoul date '+%Y-%m-%d %H:%M:%S') =====" >> $LOG_FILE
-
-# 4. 기존 프로세스 있다면 종료
-if pgrep -f '*.jar' > /dev/null; then
-    kill -9 $(pgrep -f '*.jar')
-fi
-
-# 5. Spring 프로세스 기동
-nohup java -jar /home/ec2-user/spring/*.jar >> $LOG_FILE 2>&1 &
-```
-
----
-
-## 5. CodeBuild 프로젝트 생성
+## 5. CodeBuild 프로젝트 (Source : Code Commit → Github으로 변경)
 
 ![CodeBuild](step2/step2_codebuild.png)
 
-## 6. CodeDeploy 애플리케이션 + 배포 그룹 생성
-
-> 작성 예정
-
-## 7. CodePipeline 생성
+## 6. CodePipeline 생성
 
 ![CodePipeline](step2/step2_pipeline.png)
 
+로컬 Git에서 커밋 후 GitHub으로 푸시하면 GitHub Webhook이 CodePipeline을 트리거하고, 이후 CodeBuild → CodeDeploy 순으로 자동 실행됨.
+
+CodePipeline Source에 GitHub 연동 시 아래와 같이 AWS Connector 앱 설치 화면이 뜨며, 설치 완료 후 연결됨.
+
+![GitHub AWS App](step2/github_aws_app.png)
+
 ---
 
-## 8. 배포 결과
+## 7. 배포 결과
 
 ![After](step2/step2_after.png)
 
 ---
 
 ## 트러블슈팅
+
+### GitHub에 AWS Connector 앱 설치 필요
+
+CodeConnections로 GitHub 연결 시 GitHub → Settings → Applications → Installed GitHub Apps 에서 **AWS Connector for GitHub** 앱이 설치되어 있어야 함. 없으면 AWS 콘솔에서 연결 생성 시 GitHub 앱 설치까지 같이 진행해야 함.
 
 ### CodePipeline GitHub 연결 권한 오류
 
