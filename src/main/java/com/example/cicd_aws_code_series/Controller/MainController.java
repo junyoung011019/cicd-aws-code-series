@@ -12,7 +12,7 @@ public class MainController {
 
     @GetMapping("/")
     public String index() {
-        String text = "Hello World";
+        String text = "최종 : Code Pipeline의 여부를 확인합니다.";
         String now = ZonedDateTime.now(ZoneId.of("Asia/Seoul"))
                 .format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 
